@@ -1,5 +1,4 @@
 ﻿using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,16 +11,15 @@ using System.Windows.Forms;
 
 namespace projetavecDB
 {
-    public partial class AjouterSecteur : Form
+    public partial class AjouterBateau : Form
     {
-        public AjouterSecteur()
+        public AjouterBateau()
         {
             InitializeComponent();
         }
 
         private void btnValider_Click(object sender, EventArgs e)
         {
-            try { 
             MySqlConnection maCnx;
             string CHAINECONNEXION = "server=localhost;user=root;database=Atlantik;port=3306;password=";
             maCnx = new MySqlConnection(CHAINECONNEXION);
@@ -29,28 +27,18 @@ namespace projetavecDB
 
             MySqlCommand maCde;
             MySqlDataReader jeuEnregistrements;
-            string requete = "INSERT INTO secteur(NOM) Values (@nom)";
+            string requete = "INSERT INTO bateau(NOM) Values (@nom)";
             maCde = new MySqlCommand(requete, maCnx);
             string nom = tbxChoisie.Text;
             maCde.Parameters.AddWithValue("@nom", nom);
             jeuEnregistrements = maCde.ExecuteReader();
             MessageBox.Show("Secteur Ajouté avec succès !");
-                    while (jeuEnregistrements.Read())
+
+            while (jeuEnregistrements.Read())
             {
                 MessageBox.Show(e.ToString());
             }
             maCnx.Close();
-            }
-            catch
-            {
-                MessageBox.Show(e.ToString());
-            }
-        }
-
-        private void AjouterSecteur_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
-
