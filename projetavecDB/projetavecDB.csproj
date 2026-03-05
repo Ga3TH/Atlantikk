@@ -153,6 +153,7 @@
     <Compile Include="AjouterTraversé.Designer.cs">
       <DependentUpon>AjouterTraversé.cs</DependentUpon>
     </Compile>
+    <Compile Include="Liaison.cs" />
     <Compile Include="ModifierBateau.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AjouterSecteur.resx">
       <DependentUpon>AjouterSecteur.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AjouterTarif.resx">
+      <DependentUpon>AjouterTarif.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
