@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;  
 using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace projetavecDB
@@ -47,7 +48,86 @@ namespace projetavecDB
                     maCnx.Close(); // on se déconnecte
 
                 }
-            } 
+            }
+
+            try
+            {
+                maCnx.Open();
+                string requête = "select * from PERIODE";
+
+                var maCde = new MySqlCommand(requête, maCnx);
+                jeuEnr = maCde.ExecuteReader();
+
+                while (jeuEnr.Read())
+                {
+                    periode date = new periode((short)jeuEnr["noperiode"], (DateTime)jeuEnr["datedebut"], (DateTime)jeuEnr["datefin"]);
+                    cmbxdate.Items.Add(date);
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erreur " + ex.ToString());
+            }
+            finally
+            {
+                if (jeuEnr is object & !jeuEnr.IsClosed)
+                {
+                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
+                }
+
+                if (maCnx is object & maCnx.State == ConnectionState.Open)
+                {
+                    maCnx.Close(); // on se déconnecte
+
+                }
+            }
+
+            try
+            {
+                string requête;
+                Label lblCategorie;
+                TextBox tbx;
+                int i = 2;
+                maCnx.Open();
+                requête = "select * from type";
+                var maCde = new MySqlCommand(requête, maCnx);
+
+                jeuEnr = maCde.ExecuteReader();
+
+                while (jeuEnr.Read())
+                {
+                    
+                    Type t = new Type((string)jeuEnr["lettrecategorie"], (short)jeuEnr["notype"], (string)jeuEnr["libelle"]);
+                    lblCategorie = new Label();
+                    lblCategorie.Text = t.ToString();
+                    lblCategorie.Location = new Point(15,25*i);
+                    lblCategorie.AutoSize = true;
+                    grpbxTarif.Controls.Add(lblCategorie);
+                    tbx = new TextBox();
+                    tbx.Location = new Point(150, 25 * i);
+                    tbx.AutoSize = true;
+                    grpbxTarif.Controls.Add(tbx);
+                    i++;
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erreur " + ex.ToString());
+            }
+            finally
+            {
+                if (jeuEnr is object & !jeuEnr.IsClosed)
+                {
+                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
+                }
+
+                if (maCnx is object & maCnx.State == ConnectionState.Open)
+                {
+                    maCnx.Close(); // on se déconnecte
+
+                }
+            }
         }
 
         private void lbxSecteurs_SelectedIndexChanged(object sender, EventArgs e)

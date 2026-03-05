@@ -166,10 +166,12 @@
     <Compile Include="ModifierParametre.Designer.cs">
       <DependentUpon>ModifierParametre.cs</DependentUpon>
     </Compile>
+    <Compile Include="periode.cs" />
     <Compile Include="port.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Secteur.cs" />
+    <Compile Include="type.cs" />
     <EmbeddedResource Include="Acceuil.resx">
       <DependentUpon>Acceuil.cs</DependentUpon>
     </EmbeddedResource>

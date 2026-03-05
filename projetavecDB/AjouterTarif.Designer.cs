@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.button2 = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grpbxTarif = new System.Windows.Forms.GroupBox();
             this.lbxSecteurs = new System.Windows.Forms.ListBox();
             this.lblSecteur = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbLiaison = new System.Windows.Forms.ComboBox();
             this.lblPeriode = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cmbxdate = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // button2
@@ -47,14 +47,14 @@
             this.button2.Text = "Ajouter";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // grpbxTarif
             // 
-            this.groupBox1.Location = new System.Drawing.Point(389, 45);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(282, 273);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.grpbxTarif.Location = new System.Drawing.Point(389, 45);
+            this.grpbxTarif.Name = "grpbxTarif";
+            this.grpbxTarif.Size = new System.Drawing.Size(282, 273);
+            this.grpbxTarif.TabIndex = 2;
+            this.grpbxTarif.TabStop = false;
+            this.grpbxTarif.Text = "Tarifs par Catégorie-type";
             // 
             // lbxSecteurs
             // 
@@ -100,26 +100,26 @@
             this.lblPeriode.TabIndex = 7;
             this.lblPeriode.Text = "Periode :";
             // 
-            // comboBox1
+            // cmbxdate
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(108, 337);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(229, 21);
-            this.comboBox1.TabIndex = 8;
+            this.cmbxdate.FormattingEnabled = true;
+            this.cmbxdate.Location = new System.Drawing.Point(143, 331);
+            this.cmbxdate.Name = "cmbxdate";
+            this.cmbxdate.Size = new System.Drawing.Size(276, 21);
+            this.cmbxdate.TabIndex = 8;
             // 
             // AjouterTarif
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cmbxdate);
             this.Controls.Add(this.lblPeriode);
             this.Controls.Add(this.cmbLiaison);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblSecteur);
             this.Controls.Add(this.lbxSecteurs);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.grpbxTarif);
             this.Controls.Add(this.button2);
             this.Name = "AjouterTarif";
             this.Text = "AjouterTarif";
@@ -132,12 +132,12 @@
         #endregion
 
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpbxTarif;
         private System.Windows.Forms.ListBox lbxSecteurs;
         private System.Windows.Forms.Label lblSecteur;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbLiaison;
         private System.Windows.Forms.Label lblPeriode;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbxdate;
     }
 }
