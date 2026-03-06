@@ -55,7 +55,7 @@ namespace projetavecDB
                 TextBox tbx;
                 int i = 2;
                 maCnx.Open();
-                requête = "select * from type";
+                requête = "select * from categorie";
                 var maCde = new MySqlCommand(requête, maCnx);
 
                 jeuEnr = maCde.ExecuteReader();
@@ -63,7 +63,7 @@ namespace projetavecDB
                 while (jeuEnr.Read())
                 {
 
-                    Type t = new Type((string)jeuEnr["lettrecategorie"], (short)jeuEnr["notype"], (string)jeuEnr["libelle"]);
+                    Categorie t = new Categorie((string)jeuEnr["lettrecategorie"], (string)jeuEnr["libelle"]);
                     lblCategorie = new Label();
                     lblCategorie.Text = t.ToString();
                     lblCategorie.Location = new Point(15, 25 * i);
