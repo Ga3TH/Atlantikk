@@ -184,6 +184,9 @@
     <EmbeddedResource Include="AjouterLiaison.resx">
       <DependentUpon>AjouterLiaison.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Ajouterport.resx">
+      <DependentUpon>Ajouterport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AjouterSecteur.resx">
       <DependentUpon>AjouterSecteur.cs</DependentUpon>
     </EmbeddedResource>

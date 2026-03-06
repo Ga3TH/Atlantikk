@@ -46,6 +46,7 @@ namespace projetavecDB
             MySqlConnection maCnx;
             string CHAINECONNEXION = "server=localhost;user=root;database=Atlantik;port=3306;password=";
             maCnx = new MySqlConnection(CHAINECONNEXION);
+            MySqlDataReader jeuEnr;
             maCnx.Open();
             try
             {
