@@ -127,7 +127,6 @@ namespace projetavecDB
 
                 }
             }
-            Console.ReadLine();
         }
     }
 }   

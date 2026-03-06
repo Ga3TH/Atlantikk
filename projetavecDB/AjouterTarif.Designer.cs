@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnAjouter = new System.Windows.Forms.Button();
             this.grpbxTarif = new System.Windows.Forms.GroupBox();
             this.lbxSecteurs = new System.Windows.Forms.ListBox();
             this.lblSecteur = new System.Windows.Forms.Label();
@@ -38,14 +38,15 @@
             this.cmbxdate = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // button2
+            // btnAjouter
             // 
-            this.button2.Location = new System.Drawing.Point(543, 354);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(148, 50);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Ajouter";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnAjouter.Location = new System.Drawing.Point(543, 354);
+            this.btnAjouter.Name = "btnAjouter";
+            this.btnAjouter.Size = new System.Drawing.Size(148, 50);
+            this.btnAjouter.TabIndex = 1;
+            this.btnAjouter.Text = "Ajouter";
+            this.btnAjouter.UseVisualStyleBackColor = true;
+            this.btnAjouter.Click += new System.EventHandler(this.btnAjouter_Click);
             // 
             // grpbxTarif
             // 
@@ -120,7 +121,7 @@
             this.Controls.Add(this.lblSecteur);
             this.Controls.Add(this.lbxSecteurs);
             this.Controls.Add(this.grpbxTarif);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnAjouter);
             this.Name = "AjouterTarif";
             this.Text = "AjouterTarif";
             this.Load += new System.EventHandler(this.AjouterTarif_Load);
@@ -131,7 +132,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnAjouter;
         private System.Windows.Forms.GroupBox grpbxTarif;
         private System.Windows.Forms.ListBox lbxSecteurs;
         private System.Windows.Forms.Label lblSecteur;

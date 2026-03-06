@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace projetavecDB
 {
-    internal class periode
+    internal class Periode
     {
         private short noperiode;
         private DateTime datedebut;
         private DateTime datefin;
 
-        public periode(short noperiode ,DateTime datedebut, DateTime datefin) { 
+        public Periode(short noperiode ,DateTime datedebut, DateTime datefin) { 
             this.noperiode = noperiode;
             this.datedebut = datedebut;
             this.datefin = datefin;

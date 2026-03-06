@@ -49,11 +49,6 @@ namespace projetavecDB
             ajouterTarif.ShowDialog();
         }
 
-        private void btnAjouterTableau_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnAjouterBateau_Click(object sender, EventArgs e)
         {
             AjouterBateau ajouterBateau = new AjouterBateau();

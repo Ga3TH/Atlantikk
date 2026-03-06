@@ -60,7 +60,7 @@ namespace projetavecDB
 
                 while (jeuEnr.Read())
                 {
-                    periode date = new periode((short)jeuEnr["noperiode"], (DateTime)jeuEnr["datedebut"], (DateTime)jeuEnr["datefin"]);
+                    Periode date = new Periode((short)jeuEnr["noperiode"], (DateTime)jeuEnr["datedebut"], (DateTime)jeuEnr["datefin"]);
                     cmbxdate.Items.Add(date);
                 }
             }
@@ -106,6 +106,7 @@ namespace projetavecDB
                     tbx = new TextBox();
                     tbx.Location = new Point(150, 25 * i);
                     tbx.AutoSize = true;
+                    tbx.Tag = t.getLettrecategorie() + ";" + t.getNotype().ToString();
                     grpbxTarif.Controls.Add(tbx);
                     i++;
 
@@ -174,5 +175,52 @@ namespace projetavecDB
                 }
             }
         }
+
+        private void btnAjouter_Click(object sender, EventArgs e)
+        {
+            MySqlConnection maCnx;
+            maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
+            try
+            {
+                string requête;
+                int noLiaison = ((Liaison)cmbLiaison.SelectedItem).Getnoliaison();
+                int noperiode = ((Periode)cmbxdate.SelectedItem).Getnoperiode();
+                cmbLiaison.Items.Clear();
+                maCnx.Open();
+                requête = "insert into tarifer values (@noperiode,@lettrecategorie,@notype,@noliaison,@tarif)";
+                foreach (Control c in grpbxTarif.Controls)
+                {
+                    if (c is TextBox tbx)
+                    {
+                        string type = c.Tag.ToString();
+                        string[] word = type.Split(';');
+                        string lettrecategorie = word[0];
+                        int notype = int.Parse(word[1]);
+                        double tarif = double.Parse(c.Text);
+                        var maCde = new MySqlCommand(requête, maCnx);
+                        maCde.Parameters.AddWithValue("@noperiode", noperiode);
+                        maCde.Parameters.AddWithValue("@lettrecategorie",lettrecategorie);
+                        maCde.Parameters.AddWithValue("@notype", notype);
+                        maCde.Parameters.AddWithValue("@noliaison", noLiaison);
+                        maCde.Parameters.AddWithValue("@tarif", tarif);
+                        maCde.ExecuteNonQuery();
+                    }
+                }
+                MessageBox.Show("Tarifs ajoutée avec succès !");
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erreur " + ex.ToString());
+            }
+            finally
+            {
+                if (maCnx is object & maCnx.State == ConnectionState.Open)
+                {
+                    maCnx.Close(); // on se déconnecte
+
+                }
+            }
+        }
+
     }
 }
