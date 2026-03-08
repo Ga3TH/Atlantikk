@@ -153,6 +153,7 @@
     <Compile Include="AjouterTraversé.Designer.cs">
       <DependentUpon>AjouterTraversé.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classe_Categorie.cs" />
     <Compile Include="Liaison.cs" />
     <Compile Include="ModifierBateau.cs">
       <SubType>Form</SubType>

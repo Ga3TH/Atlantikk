@@ -31,7 +31,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbxChoisie = new System.Windows.Forms.TextBox();
             this.btnValider = new System.Windows.Forms.Button();
-            this.grpbx = new System.Windows.Forms.GroupBox();
+            this.grpbxCapacite = new System.Windows.Forms.GroupBox();
             this.SuspendLayout();
             // 
             // label1
@@ -60,21 +60,21 @@
             this.btnValider.UseVisualStyleBackColor = true;
             this.btnValider.Click += new System.EventHandler(this.btnValider_Click);
             // 
-            // grpbx
+            // grpbxCapacite
             // 
-            this.grpbx.Location = new System.Drawing.Point(430, 79);
-            this.grpbx.Name = "grpbx";
-            this.grpbx.Size = new System.Drawing.Size(230, 275);
-            this.grpbx.TabIndex = 3;
-            this.grpbx.TabStop = false;
-            this.grpbx.Text = "Capacité maximal";
+            this.grpbxCapacite.Location = new System.Drawing.Point(430, 79);
+            this.grpbxCapacite.Name = "grpbxCapacite";
+            this.grpbxCapacite.Size = new System.Drawing.Size(230, 275);
+            this.grpbxCapacite.TabIndex = 3;
+            this.grpbxCapacite.TabStop = false;
+            this.grpbxCapacite.Text = "Capacité maximal";
             // 
             // AjouterBateau
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.grpbx);
+            this.Controls.Add(this.grpbxCapacite);
             this.Controls.Add(this.btnValider);
             this.Controls.Add(this.tbxChoisie);
             this.Controls.Add(this.label1);
@@ -91,6 +91,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbxChoisie;
         private System.Windows.Forms.Button btnValider;
-        private System.Windows.Forms.GroupBox grpbx;
+        private System.Windows.Forms.GroupBox grpbxCapacite;
     }
 }
