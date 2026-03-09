@@ -1,14 +1,8 @@
-﻿using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Asn1.Ocsp;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace projetavecDB
 {
@@ -111,15 +105,16 @@ namespace projetavecDB
             maCnx.Open();
             try
             {
-                maCnx.Open();
                 string request = "Select * from contenir where nobateau = @nobateau and lettrecategorie = @lettrecategorie";
                 foreach (Control c in gbxCapacite.Controls)
                 {
-                    if (c is TextBox tbx)
+                    if (c is TextBox tbx )
                     {
                         var maCde = new MySqlCommand(request, maCnx);
                         maCde.Parameters.AddWithValue("@nobateau", ((Bateau)cmbBateau.SelectedItem).GetNobateau());
-                        maCde.Parameters.AddWithValue("@lettrecategorie", tbx.Tag);
+                        string[] parts = tbx.Tag.ToString().Split(';');
+                        string lettreCategorie = parts[0];
+                        maCde.Parameters.AddWithValue("@lettrecategorie", lettreCategorie);
                         jeuEnr = maCde.ExecuteReader();
                         while (jeuEnr.Read())
                         {
@@ -135,11 +130,11 @@ namespace projetavecDB
             }
             finally
             {
-                if (jeuEnr is object & !jeuEnr.IsClosed)
+                if (jeuEnr is object && !jeuEnr.IsClosed)
                 {
                     jeuEnr.Close();
                 }
-                if (maCnx is object & maCnx.State == ConnectionState.Open)
+                if (maCnx is object && maCnx.State == ConnectionState.Open)
                 {
                     maCnx.Close();
                 }
@@ -167,7 +162,7 @@ namespace projetavecDB
                         nobateau = ((Bateau)cmbBateau.SelectedItem).GetNobateau();
 
 
-                        string requete2 = "Update contenir(capaciteMax) set capaciteMax = @capaciteMax where nobateau = @nobateau and lettrecategorie =@lettrecategorie ";
+                        string requete2 = "Update contenir set capaciteMax = @capaciteMax where nobateau = @nobateau and lettrecategorie =@lettrecategorie ";
                         var maCde2 = new MySqlCommand(requete2, maCnx);
                         maCde2.Parameters.AddWithValue("@lettreCategorie", lettreCategorie);
                         maCde2.Parameters.AddWithValue("@noBateau", nobateau);
@@ -176,7 +171,7 @@ namespace projetavecDB
 
                     }
                 }
-                MessageBox.Show("Tout a été ajouter c'est bon !");
+                MessageBox.Show("La Modification a été effectué !");
             }
             catch (MySqlException ex)
             {
