@@ -207,6 +207,9 @@
     <EmbeddedResource Include="AjouterTarif.resx">
       <DependentUpon>AjouterTarif.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AjouterTraversé.resx">
+      <DependentUpon>AjouterTraversé.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ModifierBateau.resx">
       <DependentUpon>ModifierBateau.cs</DependentUpon>
     </EmbeddedResource>
