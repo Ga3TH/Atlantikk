@@ -1,14 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace projetavecDB
 {
@@ -24,7 +18,7 @@ namespace projetavecDB
             MySqlConnection maCnx;
             string CHAINECONNEXION = "server=localhost;user=root;database=Atlantik;port=3306;password=";
             maCnx = new MySqlConnection(CHAINECONNEXION);
-            MySqlDataReader jeuEnr = null; // Initialisation pour éviter CS0165
+            MySqlDataReader jeuEnr = null;
             maCnx.Open();
             try
             {
@@ -32,27 +26,30 @@ namespace projetavecDB
                 var maCde = new MySqlCommand(requete, maCnx);
                 string nom = tbxChoisie.Text;
                 maCde.Parameters.AddWithValue("@nom", nom);
-                int rowsAffected = maCde.ExecuteNonQuery();
-                MessageBox.Show("Bateau c'est bon !");
+                maCde.ExecuteNonQuery();
 
-                // Ajout des capacités par catégorie
-                foreach (Control control in grpbxCapacite.Controls)
+                int nobateau = 0;
+                foreach (Control control in gbxCapacite.Controls)
                 {
                     if (control is TextBox tbx)
                     {
-                        string lettreCategorie = (string)tbx.Tag;
+                        string type = control.Tag.ToString();
+                        string[] word = type.Split(';');
+                        string lettreCategorie = word[0];
                         int capaciteMax = int.Parse(tbx.Text);
-                        string nom2 = tbxChoisie.Text;
+                        nobateau = int.Parse(maCde.LastInsertedId.ToString());
+ 
 
-                        string requete2 = "INSERT INTO contenir(LETTRECATEGORIE, NOBATEAU, CAPACITEMAX) VALUES (@lettreCategorie, (SELECT NOBATEAU FROM bateau WHERE NOM = @nom2), @capaciteMax)";
+                        string requete2 = "INSERT INTO contenir (lettrecategorie, nobateau, capacitemax) VALUES (@lettreCategorie, @noBateau, @capaciteMax)";
                         var maCde2 = new MySqlCommand(requete2, maCnx);
-                        maCde.Parameters.AddWithValue("@lettreCategorie", lettreCategorie);
-                        maCde.Parameters.AddWithValue("@nom2", nom2);
-                        maCde.Parameters.AddWithValue("@capaciteMax", capaciteMax);
-                        maCde.ExecuteNonQuery();
-                        MessageBox.Show("Tout a été ajouter c'est bon !");
+                        maCde2.Parameters.AddWithValue("@lettreCategorie", lettreCategorie);
+                        maCde2.Parameters.AddWithValue("@noBateau", nobateau);
+                        maCde2.Parameters.AddWithValue("@capaciteMax", capaciteMax);
+                        maCde2.ExecuteNonQuery();
+                        
                     }
                 }
+                MessageBox.Show("Tout a été ajouter c'est bon !");
             }
             catch (MySqlException ex)
             {
@@ -60,6 +57,11 @@ namespace projetavecDB
             }
             finally
             {
+                if (jeuEnr is object && !jeuEnr.IsClosed)
+                {
+                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
+                }
+
                 if (maCnx is object && maCnx.State == ConnectionState.Open)
                 {
                     maCnx.Close(); // on se déconnecte
@@ -72,7 +74,7 @@ namespace projetavecDB
             MySqlConnection maCnx;
             string CHAINECONNEXION = "server=localhost;user=root;database=Atlantik;port=3306;password=";
             maCnx = new MySqlConnection(CHAINECONNEXION);
-            MySqlDataReader jeuEnr = null; // Initialisation pour éviter CS0165
+            MySqlDataReader jeuEnr = null;
             maCnx.Open();
             try
             {
@@ -92,12 +94,12 @@ namespace projetavecDB
                     lblCategorie.Text = t.ToString();
                     lblCategorie.Location = new Point(15, 25 * i);
                     lblCategorie.AutoSize = true;
-                    grpbxCapacite.Controls.Add(lblCategorie);
+                    gbxCapacite.Controls.Add(lblCategorie);
                     tbx = new TextBox();
                     tbx.Location = new Point(150, 25 * i);
                     tbx.AutoSize = true;
-                    tbx.Tag = t.GetLettrecategorie(); // Modification ici
-                    grpbxCapacite.Controls.Add(tbx);
+                    tbx.Tag = t.GetLettrecategorie() + ";" + t.GetLibelle();
+                    gbxCapacite.Controls.Add(tbx);
                     i++;
                 }
             }
@@ -109,12 +111,12 @@ namespace projetavecDB
             {
                 if (jeuEnr is object && !jeuEnr.IsClosed)
                 {
-                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
+                    jeuEnr.Close(); 
                 }
 
                 if (maCnx is object && maCnx.State == ConnectionState.Open)
                 {
-                    maCnx.Close(); // on se déconnecte
+                    maCnx.Close();
                 }
             }
         }

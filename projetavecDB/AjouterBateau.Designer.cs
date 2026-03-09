@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.tbxChoisie = new System.Windows.Forms.TextBox();
             this.btnValider = new System.Windows.Forms.Button();
-            this.grpbxCapacite = new System.Windows.Forms.GroupBox();
+            this.gbxCapacite = new System.Windows.Forms.GroupBox();
+            this.tbxChoisie = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -43,13 +43,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Nom Bateau";
             // 
-            // tbxChoisie
-            // 
-            this.tbxChoisie.Location = new System.Drawing.Point(109, 54);
-            this.tbxChoisie.Name = "tbxChoisie";
-            this.tbxChoisie.Size = new System.Drawing.Size(172, 20);
-            this.tbxChoisie.TabIndex = 1;
-            // 
             // btnValider
             // 
             this.btnValider.Location = new System.Drawing.Point(152, 318);
@@ -60,21 +53,28 @@
             this.btnValider.UseVisualStyleBackColor = true;
             this.btnValider.Click += new System.EventHandler(this.btnValider_Click);
             // 
-            // grpbxCapacite
+            // gbxCapacite
             // 
-            this.grpbxCapacite.Location = new System.Drawing.Point(430, 79);
-            this.grpbxCapacite.Name = "grpbxCapacite";
-            this.grpbxCapacite.Size = new System.Drawing.Size(230, 275);
-            this.grpbxCapacite.TabIndex = 3;
-            this.grpbxCapacite.TabStop = false;
-            this.grpbxCapacite.Text = "Capacité maximal";
+            this.gbxCapacite.Location = new System.Drawing.Point(394, 79);
+            this.gbxCapacite.Name = "gbxCapacite";
+            this.gbxCapacite.Size = new System.Drawing.Size(365, 349);
+            this.gbxCapacite.TabIndex = 3;
+            this.gbxCapacite.TabStop = false;
+            this.gbxCapacite.Text = "Capacité maximal";
+            // 
+            // tbxChoisie
+            // 
+            this.tbxChoisie.Location = new System.Drawing.Point(109, 54);
+            this.tbxChoisie.Name = "tbxChoisie";
+            this.tbxChoisie.Size = new System.Drawing.Size(172, 20);
+            this.tbxChoisie.TabIndex = 1;
             // 
             // AjouterBateau
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.grpbxCapacite);
+            this.Controls.Add(this.gbxCapacite);
             this.Controls.Add(this.btnValider);
             this.Controls.Add(this.tbxChoisie);
             this.Controls.Add(this.label1);
@@ -89,8 +89,8 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tbxChoisie;
         private System.Windows.Forms.Button btnValider;
-        private System.Windows.Forms.GroupBox grpbxCapacite;
+        private System.Windows.Forms.GroupBox gbxCapacite;
+        private System.Windows.Forms.TextBox tbxChoisie;
     }
 }

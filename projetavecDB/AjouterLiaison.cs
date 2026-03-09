@@ -55,7 +55,6 @@ namespace projetavecDB
 
                 }
             }
-            Console.ReadLine();
 
             try
             {
