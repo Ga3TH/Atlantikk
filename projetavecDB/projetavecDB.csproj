@@ -192,6 +192,9 @@
     <EmbeddedResource Include="AfficherDetails.resx">
       <DependentUpon>AfficherDetails.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AfficherTraversé.resx">
+      <DependentUpon>AfficherTraversé.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AjouterBateau.resx">
       <DependentUpon>AjouterBateau.cs</DependentUpon>
     </EmbeddedResource>

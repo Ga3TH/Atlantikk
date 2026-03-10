@@ -33,12 +33,14 @@
             this.lbxSecteur = new System.Windows.Forms.ListBox();
             this.lblSecteur = new System.Windows.Forms.Label();
             this.lblBateau = new System.Windows.Forms.Label();
+            this.lblDateDepart = new System.Windows.Forms.Label();
             this.lblDateArrivee = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dtpDepartHeure = new System.Windows.Forms.DateTimePicker();
             this.cmbBateau = new System.Windows.Forms.ComboBox();
             this.btnValider = new System.Windows.Forms.Button();
+            this.dtpDepartDate = new System.Windows.Forms.DateTimePicker();
+            this.dtpArriveeDate = new System.Windows.Forms.DateTimePicker();
+            this.dtpArriveeHeure = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // cmbLiaison
@@ -85,37 +87,32 @@
             this.lblBateau.TabIndex = 4;
             this.lblBateau.Text = "Nom Bateau :";
             // 
+            // lblDateDepart
+            // 
+            this.lblDateDepart.AutoSize = true;
+            this.lblDateDepart.Location = new System.Drawing.Point(351, 227);
+            this.lblDateDepart.Name = "lblDateDepart";
+            this.lblDateDepart.Size = new System.Drawing.Size(113, 13);
+            this.lblDateDepart.TabIndex = 5;
+            this.lblDateDepart.Text = "Date et heure Départ :";
+            // 
             // lblDateArrivee
             // 
             this.lblDateArrivee.AutoSize = true;
-            this.lblDateArrivee.Location = new System.Drawing.Point(351, 227);
+            this.lblDateArrivee.Location = new System.Drawing.Point(348, 296);
             this.lblDateArrivee.Name = "lblDateArrivee";
-            this.lblDateArrivee.Size = new System.Drawing.Size(113, 13);
-            this.lblDateArrivee.TabIndex = 5;
-            this.lblDateArrivee.Text = "Date et heure Départ :";
+            this.lblDateArrivee.Size = new System.Drawing.Size(116, 13);
+            this.lblDateArrivee.TabIndex = 6;
+            this.lblDateArrivee.Text = "Date et heure arrivée  :";
             // 
-            // label1
+            // dtpDepartHeure
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(348, 296);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(116, 13);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Date et heure arrivée  :";
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(493, 227);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 7;
-            // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(493, 296);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker2.TabIndex = 8;
+            this.dtpDepartHeure.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpDepartHeure.Location = new System.Drawing.Point(660, 227);
+            this.dtpDepartHeure.Name = "dtpDepartHeure";
+            this.dtpDepartHeure.ShowUpDown = true;
+            this.dtpDepartHeure.Size = new System.Drawing.Size(85, 20);
+            this.dtpDepartHeure.TabIndex = 7;
             // 
             // cmbBateau
             // 
@@ -133,18 +130,46 @@
             this.btnValider.TabIndex = 10;
             this.btnValider.Text = "Valider";
             this.btnValider.UseVisualStyleBackColor = true;
+            this.btnValider.Click += new System.EventHandler(this.btnValider_Click);
+            // 
+            // dtpDepartDate
+            // 
+            this.dtpDepartDate.Location = new System.Drawing.Point(470, 227);
+            this.dtpDepartDate.Name = "dtpDepartDate";
+            this.dtpDepartDate.Size = new System.Drawing.Size(184, 20);
+            this.dtpDepartDate.TabIndex = 11;
+            // 
+            // dtpArriveeDate
+            // 
+            this.dtpArriveeDate.Location = new System.Drawing.Point(470, 296);
+            this.dtpArriveeDate.Name = "dtpArriveeDate";
+            this.dtpArriveeDate.Size = new System.Drawing.Size(184, 20);
+            this.dtpArriveeDate.TabIndex = 13;
+            this.dtpArriveeDate.ValueChanged += new System.EventHandler(this.dtpArriveDate_ValueChanged);
+            // 
+            // dtpArriveeHeure
+            // 
+            this.dtpArriveeHeure.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpArriveeHeure.Location = new System.Drawing.Point(660, 296);
+            this.dtpArriveeHeure.Name = "dtpArriveeHeure";
+            this.dtpArriveeHeure.ShowUpDown = true;
+            this.dtpArriveeHeure.Size = new System.Drawing.Size(85, 20);
+            this.dtpArriveeHeure.TabIndex = 12;
+            this.dtpArriveeHeure.ValueChanged += new System.EventHandler(this.dtpArriveeHeure_ValueChanged);
             // 
             // AjouterTraversé
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dtpArriveeDate);
+            this.Controls.Add(this.dtpArriveeHeure);
+            this.Controls.Add(this.dtpDepartDate);
             this.Controls.Add(this.btnValider);
             this.Controls.Add(this.cmbBateau);
-            this.Controls.Add(this.dateTimePicker2);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.dtpDepartHeure);
             this.Controls.Add(this.lblDateArrivee);
+            this.Controls.Add(this.lblDateDepart);
             this.Controls.Add(this.lblBateau);
             this.Controls.Add(this.lblSecteur);
             this.Controls.Add(this.lbxSecteur);
@@ -165,11 +190,13 @@
         private System.Windows.Forms.ListBox lbxSecteur;
         private System.Windows.Forms.Label lblSecteur;
         private System.Windows.Forms.Label lblBateau;
+        private System.Windows.Forms.Label lblDateDepart;
         private System.Windows.Forms.Label lblDateArrivee;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dtpDepartHeure;
         private System.Windows.Forms.ComboBox cmbBateau;
         private System.Windows.Forms.Button btnValider;
+        private System.Windows.Forms.DateTimePicker dtpDepartDate;
+        private System.Windows.Forms.DateTimePicker dtpArriveeDate;
+        private System.Windows.Forms.DateTimePicker dtpArriveeHeure;
     }
 }

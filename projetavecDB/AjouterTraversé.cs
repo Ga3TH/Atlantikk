@@ -1,6 +1,7 @@
-﻿using System;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace projetavecDB
@@ -14,9 +15,7 @@ namespace projetavecDB
 
         private void AjouterTraversé_Load(object sender, EventArgs e)
         {
-            MySqlConnection maCnx;
-            string CHAINECONNEXION = "server=localhost;user=root;database=Atlantik;port=3306;password=";
-            maCnx = new MySqlConnection(CHAINECONNEXION);
+            MySqlConnection maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
             MySqlDataReader jeuEnr = null;
             maCnx.Open();
             try
@@ -84,17 +83,14 @@ namespace projetavecDB
         private void lbxSecteur_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            MySqlConnection maCnx;
-            string CHAINECONNEXION = "server=localhost;user=root;database=Atlantik;port=3306;password=";
-            maCnx = new MySqlConnection(CHAINECONNEXION);
+            MySqlConnection maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
             MySqlDataReader jeuEnr = null;
             cmbLiaison.Items.Clear();
             try
             {
-                string requête;
                 int noSecteur = ((Secteur)lbxSecteur.SelectedItem).GetNoSecteur();
                 maCnx.Open();
-                requête = "select *, p1.nom as 'nomport_depart', p2.nom as 'nomport_arrivee' from liaison li inner join port p1 on (li.NOPORT_DEPART = p1.noport) inner join port p2 on (li.NOPORT_ARRIVEE = p2.noport) where nosecteur = @noSecteur";
+                string requête = "select *, p1.nom as 'nomport_depart', p2.nom as 'nomport_arrivee' from liaison li inner join port p1 on (li.NOPORT_DEPART = p1.noport) inner join port p2 on (li.NOPORT_ARRIVEE = p2.noport) where nosecteur = @noSecteur";
 
                 var maCde = new MySqlCommand(requête, maCnx);
 
@@ -126,6 +122,55 @@ namespace projetavecDB
 
                 }
             }
+        }
+
+        private void btnValider_Click(object sender, EventArgs e)
+        {
+            MySqlConnection maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
+            MySqlDataReader jeuEnr = null;
+            try
+            {
+                maCnx.Open();
+
+                string requête = "Insert into traversee(noliaison,nobateau,dateheuredepart,dateheurearrivee) Values (@noliaison,@nobateau,@dateheuredepart,@dateheurearrivee)";
+                var maCde = new MySqlCommand(requête, maCnx);
+                maCde.Parameters.AddWithValue("@noliaison", ((Liaison)cmbLiaison.SelectedItem).Getnoliaison());
+                maCde.Parameters.AddWithValue("@nobateau", ((Bateau)cmbBateau.SelectedItem).GetNobateau());
+                maCde.Parameters.AddWithValue("@dateheuredepart", DateTime.Parse(dtpDepartDate.Text + " " + dtpDepartHeure.Text));
+                maCde.Parameters.AddWithValue("@dateheurearrivee", DateTime.Parse(dtpArriveeDate.Text + " " + dtpArriveeHeure.Text));
+                maCde.ExecuteNonQuery();
+                MessageBox.Show("Traversee ajoutée avec succès !");
+
+
+            
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erreur " + ex.ToString());
+            }
+            finally
+            {
+                if (jeuEnr is object && !jeuEnr.IsClosed)
+                {
+                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
+                }
+
+                if (maCnx is object && maCnx.State == ConnectionState.Open)
+                {
+                    maCnx.Close(); // on se déconnecte
+
+                }
+            }
+        }
+
+        private void dtpArriveDate_ValueChanged(object sender, EventArgs e)
+        {
+            dtpArriveeDate.MinDate = dtpDepartDate.Value;
+        }
+
+        private void dtpArriveeHeure_ValueChanged(object sender, EventArgs e)
+        {
+            dtpArriveeHeure.MinDate = dtpDepartHeure.Value;
         }
     }
 }
