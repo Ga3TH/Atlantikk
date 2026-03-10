@@ -86,9 +86,9 @@ namespace projetavecDB
             return lesCategories;
         }
 
-        List<Traversee> GetLesTraverseesBateaux(int noliaison, string dateTraversee)
+        List<traversee> GetLesTraverseesBateaux(int noliaison, string dateTraversee)
         {
-            List<Traversee> lesTraversee = new List<Traversee>();
+            List<traversee> lesTraversee = new List<traversee>();
             MySqlConnection maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
             MySqlDataReader jeuEnr = null;
             try
