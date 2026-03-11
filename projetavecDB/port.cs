@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace projetavecDB
 {
-    internal class port
+    internal class Port
     {
         private int noPort;
         private string nom;
 
-        public port(int noPort, string nom)
+        public Port(int noPort, string nom)
         {
             this.noPort = noPort;
             this.nom = nom;

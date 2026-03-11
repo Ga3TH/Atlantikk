@@ -32,7 +32,7 @@
             this.lbxSecteur = new System.Windows.Forms.ListBox();
             this.lblLiaison = new System.Windows.Forms.Label();
             this.cmbLiaison = new System.Windows.Forms.ComboBox();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.lvTraversee = new System.Windows.Forms.ListView();
             this.dtpDepartDate = new System.Windows.Forms.DateTimePicker();
             this.lblDate = new System.Windows.Forms.Label();
             this.lblAfficher = new System.Windows.Forms.Button();
@@ -73,14 +73,14 @@
             this.cmbLiaison.Size = new System.Drawing.Size(121, 21);
             this.cmbLiaison.TabIndex = 4;
             // 
-            // listView1
+            // lvTraversee
             // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(263, 124);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(510, 245);
-            this.listView1.TabIndex = 8;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.lvTraversee.HideSelection = false;
+            this.lvTraversee.Location = new System.Drawing.Point(263, 124);
+            this.lvTraversee.Name = "lvTraversee";
+            this.lvTraversee.Size = new System.Drawing.Size(510, 245);
+            this.lvTraversee.TabIndex = 8;
+            this.lvTraversee.UseCompatibleStateImageBehavior = false;
             // 
             // dtpDepartDate
             // 
@@ -106,6 +106,7 @@
             this.lblAfficher.TabIndex = 15;
             this.lblAfficher.Text = "Afficher les traversées";
             this.lblAfficher.UseVisualStyleBackColor = true;
+            this.lblAfficher.Click += new System.EventHandler(this.lblAfficher_Click);
             // 
             // AfficherTraversé
             // 
@@ -115,7 +116,7 @@
             this.Controls.Add(this.lblAfficher);
             this.Controls.Add(this.dtpDepartDate);
             this.Controls.Add(this.lblDate);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.lvTraversee);
             this.Controls.Add(this.lblSecteur);
             this.Controls.Add(this.lbxSecteur);
             this.Controls.Add(this.lblLiaison);
@@ -134,7 +135,7 @@
         private System.Windows.Forms.ListBox lbxSecteur;
         private System.Windows.Forms.Label lblLiaison;
         private System.Windows.Forms.ComboBox cmbLiaison;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView lvTraversee;
         private System.Windows.Forms.DateTimePicker dtpDepartDate;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.Button lblAfficher;

@@ -66,7 +66,7 @@ namespace projetavecDB
 
                 while (jeuEnr.Read())
                 {
-                    port p = new port((int)jeuEnr["noPort"], (string)jeuEnr["nom"]);
+                    Port p = new Port((int)jeuEnr["noPort"], (string)jeuEnr["nom"]);
                     cmbArrivée.Items.Add(p);
                     cmbDepart.Items.Add(p);
                 }
@@ -99,19 +99,18 @@ namespace projetavecDB
             try
             {
                 string requête;
-                int noPortDepart = ((port)cmbDepart.SelectedItem).GetNoPort();
-                int noPortArrivee = ((port)cmbArrivée.SelectedItem).GetNoPort();
+                int noPortDepart = ((Port)cmbDepart.SelectedItem).GetNoPort();
+                int noPortArrivee = ((Port)cmbArrivée.SelectedItem).GetNoPort();
                 int noSecteur = ((Secteur)lbxSecteurs.SelectedItem).GetNoSecteur();
                 string distance = tbxDistance.Text;
                 maCnx.Open();
                 requête = "insert into liaison(noport_depart,nosecteur,noport_arrivee,distance) values (@noPortDepart, @noSecteur, @noPortArrivee, @distance)";
                 var maCde = new MySqlCommand(requête, maCnx);
-                
                 maCde.Parameters.AddWithValue("@noPortDepart", noPortDepart);
                 maCde.Parameters.AddWithValue("@noPortArrivee", noPortArrivee);
                 maCde.Parameters.AddWithValue("@noSecteur", noSecteur);
                 maCde.Parameters.AddWithValue("@distance", distance);
-
+                maCde.ExecuteNonQuery();
                 MessageBox.Show("Liaison ajoutée avec succès !");
             }
             catch (MySqlException ex)

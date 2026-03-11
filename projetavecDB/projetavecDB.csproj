@@ -167,6 +167,7 @@
     </Compile>
     <Compile Include="Bateau.cs" />
     <Compile Include="Classe_Categorie.cs" />
+    <Compile Include="Classe_traversee.cs" />
     <Compile Include="Liaison.cs" />
     <Compile Include="ModifierBateau.cs">
       <SubType>Form</SubType>
