@@ -31,7 +31,7 @@
             this.cmbNom = new System.Windows.Forms.ComboBox();
             this.lblNom = new System.Windows.Forms.Label();
             this.lvReservation = new System.Windows.Forms.ListView();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.SuspendLayout();
             // 
             // cmbNom
@@ -60,22 +60,23 @@
             this.lvReservation.Size = new System.Drawing.Size(555, 96);
             this.lvReservation.TabIndex = 2;
             this.lvReservation.UseCompatibleStateImageBehavior = false;
+            this.lvReservation.SelectedIndexChanged += new System.EventHandler(this.lvReservation_SelectedIndexChanged);
             // 
-            // listView1
+            // groupBox1
             // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(309, 173);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(322, 265);
-            this.listView1.TabIndex = 3;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.groupBox1.Location = new System.Drawing.Point(309, 171);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(296, 267);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "gbxCaracteristiques";
             // 
             // AfficherDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lvReservation);
             this.Controls.Add(this.lblNom);
             this.Controls.Add(this.cmbNom);
@@ -92,6 +93,6 @@
         private System.Windows.Forms.ComboBox cmbNom;
         private System.Windows.Forms.Label lblNom;
         private System.Windows.Forms.ListView lvReservation;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
