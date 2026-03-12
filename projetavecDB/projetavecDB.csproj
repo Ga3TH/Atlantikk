@@ -215,6 +215,9 @@
     <EmbeddedResource Include="ModifierBateau.resx">
       <DependentUpon>ModifierBateau.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ModifierParametre.resx">
+      <DependentUpon>ModifierParametre.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
