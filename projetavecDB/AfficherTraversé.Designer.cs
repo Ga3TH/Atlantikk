@@ -88,6 +88,7 @@
             this.dtpDepartDate.Name = "dtpDepartDate";
             this.dtpDepartDate.Size = new System.Drawing.Size(184, 20);
             this.dtpDepartDate.TabIndex = 14;
+            this.dtpDepartDate.Value = new System.DateTime(2021, 7, 10, 0, 0, 0, 0);
             // 
             // lblDate
             // 

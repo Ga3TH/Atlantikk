@@ -10,7 +10,7 @@ namespace projetavecDB
 {
     public partial class AfficherTraversé : Form
     {
-        int GetQuantiteEnregistree(int noTraversee, string lettreCategorie)
+        private int GetQuantiteEnregistree(int noTraversee, string lettreCategorie)
         {
             MySqlConnection maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
             MySqlDataReader jeuEnr = null;
@@ -50,7 +50,7 @@ namespace projetavecDB
             }
         }
 
-        List<Categorie> GetLesCategories()
+        private List<Categorie> GetLesCategories()
         {
             List<Categorie> lesCategories = new List<Categorie>();
             MySqlConnection maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
@@ -88,7 +88,7 @@ namespace projetavecDB
             return lesCategories;
         }
 
-        List<Classe_traversee> GetLesTraverseesBateaux(int noliaison, string dateTraversee)
+        private List<Classe_traversee> GetLesTraverseesBateaux(int noliaison, string dateTraversee)
         {
             List<Classe_traversee> lesTraversee = new List<Classe_traversee>();
             MySqlConnection maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
@@ -128,7 +128,7 @@ namespace projetavecDB
             return lesTraversee;
         }
 
-        int GetCapaciteMaximale(int noTraversee, string lettreCategorie)
+        private int GetCapaciteMaximale(int noTraversee, string lettreCategorie)
         {
             MySqlConnection maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
             MySqlDataReader jeuEnr = null;
@@ -273,6 +273,7 @@ namespace projetavecDB
                 MessageBox.Show("Selectionne une liaison ho tu t'es cru ou la !");
             }
 
+
             int noLiaison = ((Liaison)cmbLiaison.SelectedItem).Getnoliaison();
             string dateTraversee = dtpDepartDate.Value.ToString("yyyy-MM-dd");
             List<Classe_traversee> lesTraversees = GetLesTraverseesBateaux(noLiaison, dateTraversee);
@@ -280,18 +281,20 @@ namespace projetavecDB
             foreach (Classe_traversee t in lesTraversees)
             {
                 MySqlConnection maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
-                MySqlDataReader jeuEnrNom = null;
+                MySqlDataReader jeuEnr = null;
                 string nomBateau = "";
 
                 try
                 {
+                    string requête;
                     maCnx.Open();
-                    var maCde = new MySqlCommand("SELECT nom FROM bateau WHERE nobateau = @nobateau");
+                    requête = "SELECT nom FROM bateau WHERE nobateau = @nobateau";
+                    var maCde = new MySqlCommand(requête, maCnx);
                     maCde.Parameters.AddWithValue("@nobateau", t.GetNobateau());
-                    jeuEnrNom = maCde.ExecuteReader();
-                    while (jeuEnrNom.Read())
+                    jeuEnr = maCde.ExecuteReader();
+                    while (jeuEnr.Read())
                     {
-                        nomBateau = (string)jeuEnrNom["nom"];
+                        nomBateau = (string)jeuEnr["nom"];
                     }
 
                     ListViewItem item = new ListViewItem(t.GetNotraversee().ToString());
@@ -312,9 +315,9 @@ namespace projetavecDB
                 }
                 finally
                 {
-                    if (jeuEnrNom is object && !jeuEnrNom.IsClosed)
+                    if (jeuEnr is object && !jeuEnr.IsClosed)
                     {
-                        jeuEnrNom.Close();
+                        jeuEnr.Close();
                     }
                     if (maCnx is object && maCnx.State == ConnectionState.Open)
                     {
