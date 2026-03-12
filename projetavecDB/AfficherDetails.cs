@@ -175,13 +175,13 @@ namespace projetavecDB
                     int valeur = (int)jeuEnr["quantitereservee"];
                     
                     lblCategorie = new Label();
-                    lblCategorie.Text = libelle + " : ";
+                    lblCategorie.Text = libelle;
                     lblCategorie.Location = new Point(15, 25 * i);
                     lblCategorie.AutoSize = true;
                     gbxCaracteristiques.Controls.Add(lblCategorie);
 
                     lblValeur = new Label();
-                    lblValeur.Text = valeur.ToString();
+                    lblValeur.Text = ":   "+valeur.ToString();
                     lblValeur.Location = new Point(150, 25 * i);
                     lblValeur.AutoSize = true;
                     gbxCaracteristiques.Controls.Add(lblValeur);
