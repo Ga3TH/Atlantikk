@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Google.Protobuf.WellKnownTypes;
+using MySql.Data.MySqlClient;
 using Mysqlx.Session;
 using projetavecDB.projetavecDB;
 using System;
@@ -157,33 +158,57 @@ namespace projetavecDB
             MySqlDataReader jeuEnr = null;
             try
             {
+                gbxCaracteristiques.Controls.Clear();
                 string requête;
-                Label lblCategorie, lblValeur;
+                Label lblCategorie, lblValeur, lblMontant, lblValeurMontant, lblreglement;
                 int i = 2;
                 maCnx.Open();
-                requête = "select * from type";
+                requête = "SELECT * from enregistrer inner join type on enregistrer.NOTYPE = type.NOTYPE inner join reservation on  enregistrer.NORESERVATION = reservation.NORESERVATION where type.LETTRECATEGORIE= enregistrer.LETTRECATEGORIE and enregistrer.NOTYPE = type.NOTYPE and enregistrer.NORESERVATION = @noreservation";
                 var maCde = new MySqlCommand(requête, maCnx);
-
+                maCde.Parameters.AddWithValue("@noreservation", lvReservation.SelectedItems[0].Text);
                 jeuEnr = maCde.ExecuteReader();
 
                 while (jeuEnr.Read())
                 {
 
-                    Type t = new Type((string)jeuEnr["lettrecategorie"], (short)jeuEnr["notype"], (string)jeuEnr["libelle"]);
+                    string libelle = (string)jeuEnr["libelle"];
+                    int valeur = (int)jeuEnr["quantitereservee"];
+                    
                     lblCategorie = new Label();
-                    lblCategorie.Text = t.ToString();
+                    lblCategorie.Text = libelle + " : ";
                     lblCategorie.Location = new Point(15, 25 * i);
                     lblCategorie.AutoSize = true;
-                    gbxCa
                     gbxCaracteristiques.Controls.Add(lblCategorie);
-                    lblValeur = new TextBox();
-                    tbx.Location = new Point(150, 25 * i);
-                    tbx.AutoSize = true;
-                    tbx.Tag = t.getLettrecategorie() + ";" + t.getNotype().ToString();
-                    grpbxTarif.Controls.Add(lblValeur);
+
+                    lblValeur = new Label();
+                    lblValeur.Text = valeur.ToString();
+                    lblValeur.Location = new Point(150, 25 * i);
+                    lblValeur.AutoSize = true;
+                    gbxCaracteristiques.Controls.Add(lblValeur);
+
                     i++;
 
                 }
+                double Montant = (double)jeuEnr["montanttotal"];
+                lblMontant = new Label();
+                lblMontant.Text = "Montant total : ";
+                lblMontant.Location = new Point(15, 25 * i);
+                lblMontant.AutoSize = true;
+                gbxCaracteristiques.Controls.Add(lblMontant);
+
+                lblValeurMontant = new Label();
+                lblValeurMontant.Text = Montant.ToString() + "€";
+                lblValeurMontant.Location = new Point(150, 25 * i);
+                lblValeurMontant.AutoSize = true;
+                gbxCaracteristiques.Controls.Add(lblValeurMontant);
+                i++;
+                string reglement = (string)jeuEnr["modereglement"];
+                lblreglement = new Label();
+                lblreglement.Text = "Reglé par "+ reglement ;
+                lblreglement.Location = new Point(15, 25 * i+1);
+                lblreglement.AutoSize = true;
+                gbxCaracteristiques.Controls.Add(lblreglement);
+
             }
             catch (MySqlException ex)
             {
