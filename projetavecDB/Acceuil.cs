@@ -19,7 +19,7 @@ namespace projetavecDB
 
         private void Acceuil_Load(object sender, EventArgs e)
         {
-
+            //BackgroundImage = Image.FromFile();
         }
 
 

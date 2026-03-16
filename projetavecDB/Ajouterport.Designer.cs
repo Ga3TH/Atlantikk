@@ -49,6 +49,7 @@
             this.tbxChoisie.Name = "tbxChoisie";
             this.tbxChoisie.Size = new System.Drawing.Size(172, 20);
             this.tbxChoisie.TabIndex = 4;
+            this.tbxChoisie.Validating += new System.ComponentModel.CancelEventHandler(this.tbxChoisie_Validating);
             // 
             // label1
             // 
