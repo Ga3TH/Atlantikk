@@ -46,6 +46,7 @@
             this.lbxSecteurs.Name = "lbxSecteurs";
             this.lbxSecteurs.Size = new System.Drawing.Size(161, 329);
             this.lbxSecteurs.TabIndex = 0;
+            this.lbxSecteurs.Validating += new System.ComponentModel.CancelEventHandler(this.lbxSecteurs_Validating);
             // 
             // lblSecteur
             // 
@@ -63,6 +64,7 @@
             this.cmbDepart.Name = "cmbDepart";
             this.cmbDepart.Size = new System.Drawing.Size(121, 21);
             this.cmbDepart.TabIndex = 2;
+            this.cmbDepart.Validating += new System.ComponentModel.CancelEventHandler(this.cmbDepart_Validating);
             // 
             // cmbArrivée
             // 

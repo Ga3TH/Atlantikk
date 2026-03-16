@@ -1,8 +1,9 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace projetavecDB
 {
@@ -12,6 +13,7 @@ namespace projetavecDB
         {
             InitializeComponent();
         }
+        ErrorProvider pbSaisie = new ErrorProvider();
 
         private void ModifierBateau_Load(object sender, EventArgs e)
         {
@@ -74,6 +76,7 @@ namespace projetavecDB
                     tbx.Location = new Point(150, 25 * i);
                     tbx.AutoSize = true;
                     tbx.Tag = t.GetLettrecategorie() + ";" + t.GetLibelle();
+                    tbx.Validating += tbxCapacite_Validating;
                     gbxCapacite.Controls.Add(tbx);
                     i++;
                 }
@@ -141,7 +144,7 @@ namespace projetavecDB
             }
         }
 
-            private void btnValider_Click(object sender, EventArgs e)
+        private void btnValider_Click(object sender, EventArgs e)
         {
             MySqlConnection maCnx;
             string CHAINECONNEXION = "server=localhost;user=root;database=Atlantik;port=3306;password=";
@@ -190,5 +193,34 @@ namespace projetavecDB
                 }
             }
         }
+        private void tbxCapacite_Validating(object sender, CancelEventArgs e)
+        {
+            TextBox tbx = (TextBox)sender;
+            if (tbx.Text == "" || !int.TryParse(tbx.Text, out int valeur) || valeur <= 0)
+            {
+                tbx.BackColor = Color.Red;
+                pbSaisie.SetError(tbx, "Veuillez saisir un nombre entier supérieur à 0 !");
+                e.Cancel = true;
+            }
+            else
+            {
+                tbx.BackColor = Color.Green;
+                pbSaisie.SetError(tbx, "");
+            }
+        }
+
+        private void cmbBateau_Validating(object sender, CancelEventArgs e)
+        {
+            if (cmbBateau.SelectedItem == null)
+            {
+                e.Cancel = true;
+                pbSaisie.SetError(cmbBateau, "Veuillez sélectionner un bateau !");
+            }
+            else
+            {
+                pbSaisie.SetError(cmbBateau, "");
+            }
+        }
     }
 }
+

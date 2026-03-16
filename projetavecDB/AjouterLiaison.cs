@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,6 +19,7 @@ namespace projetavecDB
         {
             InitializeComponent();
         }
+        ErrorProvider pbSaisie = new ErrorProvider();
 
         private void AjouterLiaison_Load(object sender, EventArgs e)
         {
@@ -94,8 +96,22 @@ namespace projetavecDB
         private void btnValider_Click(object sender, EventArgs e)
         {
             MySqlConnection maCnx;
-            MySqlDataReader jeuEnr = null;
             maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
+
+            if (cmbDepart.SelectedItem == null || cmbArrivée.SelectedItem == null || lbxSecteurs.SelectedItem == null)
+            {
+                MessageBox.Show("Veuillez sélectionner un port de départ, un port d'arrivée et un secteur !");
+                return;
+            }
+
+            var objetRegEx = new Regex(@"^\d+([.,]\d{1,2})?$");
+            if (tbxDistance.Text == "" || !objetRegEx.IsMatch(tbxDistance.Text))
+            {
+                tbxDistance.BackColor = Color.Red;
+                pbSaisie.SetError(tbxDistance, "Veuillez saisir une distance valide (ex: 8.30) !");
+                return;
+            }
+
             try
             {
                 string requête;
@@ -124,6 +140,61 @@ namespace projetavecDB
                     maCnx.Close(); // on se déconnecte
 
                 }
+            }
+        }
+
+        private void lbxSecteurs_Validating(object sender, CancelEventArgs e)
+        {
+            if (lbxSecteurs.SelectedItem == null)
+            {
+                e.Cancel = true;
+                pbSaisie.SetError(lbxSecteurs, "Veuillez sélectionner un secteur !");
+            }
+            else
+            {
+                pbSaisie.SetError(lbxSecteurs, "");
+            }
+        }
+
+        private void cmbDepart_Validating(object sender, CancelEventArgs e)
+        {
+            if (cmbDepart.SelectedItem == null)
+            {
+                e.Cancel = true;
+                pbSaisie.SetError(cmbDepart, "Veuillez sélectionner un port de départ !");
+            }
+            else
+            {
+                pbSaisie.SetError(cmbDepart, "");
+            }
+        }
+
+        private void cmbArrivée_Validating(object sender, CancelEventArgs e)
+        {
+            if (cmbArrivée.SelectedItem == null)
+            {
+                e.Cancel = true;
+                pbSaisie.SetError(cmbArrivée, "Veuillez sélectionner un port d'arrivée !");
+            }
+            else
+            {
+                pbSaisie.SetError(cmbArrivée, "");
+            }
+        }
+
+        private void tbxDistance_Validating(object sender, CancelEventArgs e)
+        {
+            var objetRegEx = new Regex(@"^\d+([.,]\d{1,2})?$");
+            if (tbxDistance.Text == "" || !objetRegEx.IsMatch(tbxDistance.Text))
+            {
+                tbxDistance.BackColor = Color.Red;
+                e.Cancel = true;
+                pbSaisie.SetError(tbxDistance, "Veuillez saisir une distance valide (ex: 8.30) !");
+            }
+            else
+            {
+                tbxDistance.BackColor = Color.Green;
+                pbSaisie.SetError(tbxDistance, "");
             }
         }
     }

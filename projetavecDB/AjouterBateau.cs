@@ -1,7 +1,9 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace projetavecDB
@@ -12,6 +14,7 @@ namespace projetavecDB
         {
             InitializeComponent();
         }
+        ErrorProvider pbSaisie = new ErrorProvider();
 
         private void btnValider_Click(object sender, EventArgs e)
         {
@@ -20,6 +23,8 @@ namespace projetavecDB
             maCnx = new MySqlConnection(CHAINECONNEXION);
             MySqlDataReader jeuEnr = null;
             maCnx.Open();
+
+
             try
             {
                 string requete = "INSERT INTO bateau(NOM) Values (@nom)";
@@ -99,6 +104,7 @@ namespace projetavecDB
                     tbx.Location = new Point(150, 25 * i);
                     tbx.AutoSize = true;
                     tbx.Tag = t.GetLettrecategorie() + ";" + t.GetLibelle();
+                    tbx.Validating += tbxCapacite_Validating;
                     gbxCapacite.Controls.Add(tbx);
                     i++;
                 }
@@ -119,6 +125,40 @@ namespace projetavecDB
                     maCnx.Close();
                 }
             }
+        }
+        private void tbxCapacite_Validating(object sender, CancelEventArgs e)
+        {
+            TextBox tbx = (TextBox)sender;
+            if (tbx.Text == "" || !int.TryParse(tbx.Text, out int valeur) || valeur <= 0)
+            {
+                tbx.BackColor = Color.Red;
+                e.Cancel = true;
+                pbSaisie.SetError(tbx, "Veuillez saisir un nombre entier supérieur à 0 !");
+            }
+            else
+            {
+                tbx.BackColor = Color.Green;
+                pbSaisie.SetError(tbx, "");
+            }
+        }
+
+        private void tbxChoisie_Validating(object sender, CancelEventArgs e)
+        {
+            var objetRegEx = new Regex("^[a-zA-Zéèêëçàâôùûïî -]+$");
+            var résultatTest = objetRegEx.Match(tbxChoisie.Text);
+
+            if (tbxChoisie.Text == "" || !résultatTest.Success)
+            {
+                tbxChoisie.BackColor = Color.Red;
+                e.Cancel = true;
+                pbSaisie.SetError(tbxChoisie, "Saisir un secteur valide !");
+            }
+            else
+            {
+                tbxChoisie.BackColor = Color.Green;
+                pbSaisie.Clear();
+            }
+
         }
     }
 }

@@ -70,6 +70,7 @@
             this.cmbBateau.Size = new System.Drawing.Size(121, 21);
             this.cmbBateau.TabIndex = 8;
             this.cmbBateau.SelectedIndexChanged += new System.EventHandler(this.cmbBateau_SelectedIndexChanged);
+            this.cmbBateau.Validating += new System.ComponentModel.CancelEventHandler(this.cmbBateau_Validating);
             // 
             // ModifierBateau
             // 
