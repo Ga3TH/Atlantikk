@@ -154,77 +154,82 @@ namespace projetavecDB
 
         private void lvReservation_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MySqlConnection maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
-            MySqlDataReader jeuEnr = null;
-            try
+            if (lvReservation.SelectedItems.Count != 0)
             {
-                gbxCaracteristiques.Controls.Clear();
-                string requête;
-                Label lblCategorie, lblValeur, lblMontant, lblValeurMontant, lblreglement;
-                int i = 2;
-                maCnx.Open();
-                requête = "SELECT * from enregistrer inner join type on enregistrer.NOTYPE = type.NOTYPE inner join reservation on  enregistrer.NORESERVATION = reservation.NORESERVATION where type.LETTRECATEGORIE= enregistrer.LETTRECATEGORIE and enregistrer.NOTYPE = type.NOTYPE and enregistrer.NORESERVATION = @noreservation";
-                var maCde = new MySqlCommand(requête, maCnx);
-                maCde.Parameters.AddWithValue("@noreservation", lvReservation.SelectedItems[0].Text);
-                jeuEnr = maCde.ExecuteReader();
 
-                while (jeuEnr.Read())
+                MySqlConnection maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
+                MySqlDataReader jeuEnr = null;
+                try
                 {
+                    gbxCaracteristiques.Controls.Clear();
+                    string requête;
+                    Label lblCategorie, lblValeur, lblMontant, lblValeurMontant, lblreglement;
+                    int i = 2;
+                    int noReservation = int.Parse(lvReservation.SelectedItems[0].Text);
+                    maCnx.Open();
+                    requête = "SELECT * from enregistrer inner join type on enregistrer.NOTYPE = type.NOTYPE inner join reservation on  enregistrer.NORESERVATION = reservation.NORESERVATION where type.LETTRECATEGORIE= enregistrer.LETTRECATEGORIE and enregistrer.NOTYPE = type.NOTYPE and enregistrer.NORESERVATION = @noreservation";
+                    var maCde = new MySqlCommand(requête, maCnx);
+                    maCde.Parameters.AddWithValue("@noreservation", noReservation);
+                    jeuEnr = maCde.ExecuteReader();
 
-                    string libelle = (string)jeuEnr["libelle"];
-                    int valeur = (int)jeuEnr["quantitereservee"];
-                    
-                    lblCategorie = new Label();
-                    lblCategorie.Text = libelle;
-                    lblCategorie.Location = new Point(15, 25 * i);
-                    lblCategorie.AutoSize = true;
-                    gbxCaracteristiques.Controls.Add(lblCategorie);
+                    while (jeuEnr.Read())
+                    {
 
-                    lblValeur = new Label();
-                    lblValeur.Text = ":   "+valeur.ToString();
-                    lblValeur.Location = new Point(150, 25 * i);
-                    lblValeur.AutoSize = true;
-                    gbxCaracteristiques.Controls.Add(lblValeur);
+                        string libelle = (string)jeuEnr["libelle"];
+                        int valeur = (int)jeuEnr["quantitereservee"];
 
+                        lblCategorie = new Label();
+                        lblCategorie.Text = libelle;
+                        lblCategorie.Location = new Point(15, 25 * i);
+                        lblCategorie.AutoSize = true;
+                        gbxCaracteristiques.Controls.Add(lblCategorie);
+
+                        lblValeur = new Label();
+                        lblValeur.Text = ":   " + valeur.ToString();
+                        lblValeur.Location = new Point(150, 25 * i);
+                        lblValeur.AutoSize = true;
+                        gbxCaracteristiques.Controls.Add(lblValeur);
+
+                        i++;
+
+                    }
+                    double Montant = (double)jeuEnr["montanttotal"];
+                    lblMontant = new Label();
+                    lblMontant.Text = "Montant total : ";
+                    lblMontant.Location = new Point(15, 25 * i);
+                    lblMontant.AutoSize = true;
+                    gbxCaracteristiques.Controls.Add(lblMontant);
+
+                    lblValeurMontant = new Label();
+                    lblValeurMontant.Text = Montant.ToString() + "€";
+                    lblValeurMontant.Location = new Point(150, 25 * i);
+                    lblValeurMontant.AutoSize = true;
+                    gbxCaracteristiques.Controls.Add(lblValeurMontant);
                     i++;
+                    string reglement = (string)jeuEnr["modereglement"];
+                    lblreglement = new Label();
+                    lblreglement.Text = "Reglé par " + reglement;
+                    lblreglement.Location = new Point(15, 25 * i + 1);
+                    lblreglement.AutoSize = true;
+                    gbxCaracteristiques.Controls.Add(lblreglement);
 
                 }
-                double Montant = (double)jeuEnr["montanttotal"];
-                lblMontant = new Label();
-                lblMontant.Text = "Montant total : ";
-                lblMontant.Location = new Point(15, 25 * i);
-                lblMontant.AutoSize = true;
-                gbxCaracteristiques.Controls.Add(lblMontant);
-
-                lblValeurMontant = new Label();
-                lblValeurMontant.Text = Montant.ToString() + "€";
-                lblValeurMontant.Location = new Point(150, 25 * i);
-                lblValeurMontant.AutoSize = true;
-                gbxCaracteristiques.Controls.Add(lblValeurMontant);
-                i++;
-                string reglement = (string)jeuEnr["modereglement"];
-                lblreglement = new Label();
-                lblreglement.Text = "Reglé par "+ reglement ;
-                lblreglement.Location = new Point(15, 25 * i+1);
-                lblreglement.AutoSize = true;
-                gbxCaracteristiques.Controls.Add(lblreglement);
-
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erreur " + ex.ToString());
-            }
-            finally
-            {
-                if (jeuEnr is object & !jeuEnr.IsClosed)
+                catch (MySqlException ex)
                 {
-                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
+                    MessageBox.Show("Erreur " + ex.ToString());
                 }
-
-                if (maCnx is object & maCnx.State == ConnectionState.Open)
+                finally
                 {
-                    maCnx.Close(); // on se déconnecte
+                    if (jeuEnr is object & !jeuEnr.IsClosed)
+                    {
+                        jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
+                    }
 
+                    if (maCnx is object & maCnx.State == ConnectionState.Open)
+                    {
+                        maCnx.Close(); // on se déconnecte
+
+                    }
                 }
             }
         }
