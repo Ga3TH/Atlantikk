@@ -49,6 +49,7 @@
             this.tbxChoisie.Name = "tbxChoisie";
             this.tbxChoisie.Size = new System.Drawing.Size(190, 20);
             this.tbxChoisie.TabIndex = 1;
+            this.tbxChoisie.Validating += new System.ComponentModel.CancelEventHandler(this.tbxChoisie_Validating);
             // 
             // label1
             // 
@@ -69,7 +70,6 @@
             this.Controls.Add(this.btnValider);
             this.Name = "AjouterSecteur";
             this.Text = "AjouterSecteur";
-            this.Load += new System.EventHandler(this.AjouterSecteur_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

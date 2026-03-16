@@ -25,7 +25,7 @@ namespace projetavecDB
             MySqlDataReader jeuEnr = null;
             try
             {
-                Label lblSite, lblRang, lblIdentifiant, lblCléHMAC ;
+                Label lblSite, lblRang, lblIdentifiant, lblCléHMAC;
                 TextBox tbxSite, tbxRang, tbxIdentifiant, tbxCléHMAC;
                 int i = 2;
                 maCnx.Open();
@@ -36,8 +36,8 @@ namespace projetavecDB
                 while (jeuEnr.Read())
                 {
 
-                    string Site =(string)jeuEnr["site_pb"];
-                    string rang =(string)jeuEnr["rang_pb"];
+                    string Site = (string)jeuEnr["site_pb"];
+                    string rang = (string)jeuEnr["rang_pb"];
                     string identifiant = (string)jeuEnr["identifiant_pb"];
                     string cleHMAC = (string)jeuEnr["cleHMAC_pb"];
                     bool prod = cbxProd.Checked;
@@ -161,68 +161,4 @@ namespace projetavecDB
             }
         }
     }
-    using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace ATLANTIK
-    {
-        public partial class ModifierSite : Form
-        {
-            public ModifierSite()
-            {
-                InitializeComponent();
-            }
-
-            private void btnModifier_Click(object sender, EventArgs e)
-            {
-                MySqlConnection maCnx;
-                maCnx = new MySqlConnection("server=localhost;user=root;database=atlantik;port=3306;password=");
-                try
-                {
-                    string requête;
-                    string site_pb = tbxSite.Text;
-                    string rang_pb = tbxRang.Text;
-                    string identifiant_pb = tbxId.Text;
-                    string clehmac_pb = tbxCle.Text;
-                    int enProduction = cbxProd.Checked ? 1 : 0;
-                    string melSite = tbxMel.Text;
-
-                    maCnx.Open();
-                    requête = "UPDATE parametres SET site_pb = @site_pb, rang_pb = @rang_pb, identifiant_pb = @identifiant_pb, clehmac_pb = @clehmac_pb, enproduction = @enProduction, melSite = @melSite WHERE noidentifiant = 1";
-                    var maCde = new MySqlCommand(requête, maCnx);
-                    maCde.Parameters.AddWithValue("@site_pb", site_pb);
-                    maCde.Parameters.AddWithValue("@rang_pb", rang_pb);
-                    maCde.Parameters.AddWithValue("@identifiant_pb", identifiant_pb);
-                    maCde.Parameters.AddWithValue("@clehmac_pb", clehmac_pb);
-                    maCde.Parameters.AddWithValue("@enproduction", enProduction);
-                    maCde.Parameters.AddWithValue("@melSite", melSite);
-
-                    int nbLigneAffectées;
-                    nbLigneAffectées = maCde.ExecuteNonQuery();
-                    MessageBox.Show("Site modifié avec succès !");
-
-                }
-                catch (MySqlException erreur)
-                {
-                    MessageBox.Show("Erreur " + erreur.ToString() + MessageBoxButtons.OK + MessageBoxIcon.Error);
-                }
-                final
-                {
-                    if (maCnx is object & maCnx.State == ConnectionState.Open)
-                    {
-                        maCnx.Close();
-                    }
-                }
-            }
-        }
-    }
-
 }

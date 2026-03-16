@@ -180,6 +180,13 @@ namespace projetavecDB
         {
             MySqlConnection maCnx;
             maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
+
+            if (cmbLiaison.SelectedItem == null || cmbxdate.SelectedItem == null)
+            {
+                MessageBox.Show("Veuillez sélectionner une liaison et une période.");
+                return;
+            }
+
             try
             {
                 string requête;
@@ -187,7 +194,7 @@ namespace projetavecDB
                 int noperiode = ((Periode)cmbxdate.SelectedItem).Getnoperiode();
                 cmbLiaison.Items.Clear();
                 maCnx.Open();
-                requête = "insert into tarifer values (@noperiode,@lettrecategorie,@notype,@noliaison,@tarif)";
+                var maCde = new MySqlCommand("insert into tarifer values (@noperiode,@lettrecategorie,@notype,@noliaison,@tarif)", maCnx);
                 foreach (Control c in grpbxTarif.Controls)
                 {
                     if (c is TextBox tbx)
@@ -196,10 +203,10 @@ namespace projetavecDB
                         string[] word = type.Split(';');
                         string lettrecategorie = word[0];
                         int notype = int.Parse(word[1]);
-                        double tarif = double.Parse(c.Text);
-                        var maCde = new MySqlCommand(requête, maCnx);
+                        double tarif = double.Parse(tbx.Text);
+                        maCde.Parameters.Clear();
                         maCde.Parameters.AddWithValue("@noperiode", noperiode);
-                        maCde.Parameters.AddWithValue("@lettrecategorie",lettrecategorie);
+                        maCde.Parameters.AddWithValue("@lettrecategorie", lettrecategorie);
                         maCde.Parameters.AddWithValue("@notype", notype);
                         maCde.Parameters.AddWithValue("@noliaison", noLiaison);
                         maCde.Parameters.AddWithValue("@tarif", tarif);
