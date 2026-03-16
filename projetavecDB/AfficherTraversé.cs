@@ -3,6 +3,7 @@ using Mysqlx.Crud;
 using projetavecDB.projetavecDB;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
 
@@ -10,6 +11,8 @@ namespace projetavecDB
 {
     public partial class AfficherTraversé : Form
     {
+        ErrorProvider pbSaisie = new ErrorProvider();
+
         private int GetQuantiteEnregistree(int noTraversee, string lettreCategorie)
         {
             MySqlConnection maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
@@ -39,12 +42,12 @@ namespace projetavecDB
             {
                 if (jeuEnr is object & !jeuEnr.IsClosed)
                 {
-                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
+                    jeuEnr.Close();
                 }
 
                 if (maCnx is object & maCnx.State == ConnectionState.Open)
                 {
-                    maCnx.Close(); // on se déconnecte
+                    maCnx.Close();
 
                 }
             }
@@ -76,12 +79,12 @@ namespace projetavecDB
             {
                 if (jeuEnr is object & !jeuEnr.IsClosed)
                 {
-                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
+                    jeuEnr.Close();
                 }
 
                 if (maCnx is object & maCnx.State == ConnectionState.Open)
                 {
-                    maCnx.Close(); // on se déconnecte
+                    maCnx.Close();
 
                 }
             }
@@ -116,12 +119,12 @@ namespace projetavecDB
             {
                 if (jeuEnr is object & !jeuEnr.IsClosed)
                 {
-                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
+                    jeuEnr.Close();
                 }
 
                 if (maCnx is object & maCnx.State == ConnectionState.Open)
                 {
-                    maCnx.Close(); // on se déconnecte
+                    maCnx.Close();
 
                 }
             }
@@ -157,12 +160,12 @@ namespace projetavecDB
             {
                 if (jeuEnr is object & !jeuEnr.IsClosed)
                 {
-                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
+                    jeuEnr.Close();
                 }
 
                 if (maCnx is object & maCnx.State == ConnectionState.Open)
                 {
-                    maCnx.Close(); // on se déconnecte
+                    maCnx.Close();
 
                 }
             }
@@ -198,12 +201,12 @@ namespace projetavecDB
             {
                 if (jeuEnr is object & !jeuEnr.IsClosed)
                 {
-                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
+                    jeuEnr.Close(); 
                 }
 
                 if (maCnx is object & maCnx.State == ConnectionState.Open)
                 {
-                    maCnx.Close(); // on se déconnecte
+                    maCnx.Close(); 
 
                 }
             }
@@ -241,12 +244,12 @@ namespace projetavecDB
             {
                 if (jeuEnr is object & !jeuEnr.IsClosed)
                 {
-                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
+                    jeuEnr.Close(); 
                 }
 
                 if (maCnx is object & maCnx.State == ConnectionState.Open)
                 {
-                    maCnx.Close(); // on se déconnecte
+                    maCnx.Close(); 
 
                 }
             }
@@ -270,7 +273,8 @@ namespace projetavecDB
 
             if (cmbLiaison.SelectedItem == null)
             {
-                MessageBox.Show("Selectionne une liaison ho tu t'es cru ou la !");
+                MessageBox.Show("Selectionne une liaison ho tu t'es cru où là !");
+                return;
             }
 
 
@@ -324,6 +328,31 @@ namespace projetavecDB
                         maCnx.Close();
                     }
                 }
+            }
+        }
+        private void lbxSecteur_Validating(object sender, CancelEventArgs e)
+        {
+            if (lbxSecteur.SelectedItem == null)
+            {
+                e.Cancel = true;
+                pbSaisie.SetError(lbxSecteur, "Veuillez sélectionner un secteur !");
+            }
+            else
+            {
+                pbSaisie.SetError(lbxSecteur, "");
+            }
+        }
+
+        private void cmbLiaison_Validating(object sender, CancelEventArgs e)
+        {
+            if (cmbLiaison.SelectedItem == null)
+            {
+                e.Cancel = true;
+                pbSaisie.SetError(cmbLiaison, "Veuillez sélectionner une liaison !");
+            }
+            else
+            {
+                pbSaisie.SetError(cmbLiaison, "");
             }
         }
     }

@@ -205,7 +205,7 @@ namespace projetavecDB
             else
             {
                 tbx.BackColor = Color.Green;
-                pbSaisie.SetError(tbx, "");
+                pbSaisie.Clear();
             }
         }
 
@@ -218,7 +218,7 @@ namespace projetavecDB
             }
             else
             {
-                pbSaisie.SetError(cmbBateau, "");
+                pbSaisie.Clear();
             }
         }
     }

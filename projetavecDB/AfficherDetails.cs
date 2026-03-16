@@ -165,6 +165,8 @@ namespace projetavecDB
                     string requête;
                     Label lblCategorie, lblValeur, lblMontant, lblValeurMontant, lblreglement;
                     int i = 2;
+                    
+
                     int noReservation = int.Parse(lvReservation.SelectedItems[0].Text);
                     maCnx.Open();
                     requête = "SELECT * from enregistrer inner join type on enregistrer.NOTYPE = type.NOTYPE inner join reservation on  enregistrer.NORESERVATION = reservation.NORESERVATION where type.LETTRECATEGORIE= enregistrer.LETTRECATEGORIE and enregistrer.NOTYPE = type.NOTYPE and enregistrer.NORESERVATION = @noreservation";
@@ -177,6 +179,7 @@ namespace projetavecDB
 
                         string libelle = (string)jeuEnr["libelle"];
                         int valeur = (int)jeuEnr["quantitereservee"];
+                        
 
                         lblCategorie = new Label();
                         lblCategorie.Text = libelle;
@@ -195,24 +198,25 @@ namespace projetavecDB
                     }
                     double Montant = (double)jeuEnr["montanttotal"];
                     lblMontant = new Label();
-                    lblMontant.Text = "Montant total : ";
+                    lblMontant.Text = "Montant total ";
                     lblMontant.Location = new Point(15, 25 * i);
                     lblMontant.AutoSize = true;
                     gbxCaracteristiques.Controls.Add(lblMontant);
 
                     lblValeurMontant = new Label();
-                    lblValeurMontant.Text = Montant.ToString() + "€";
+                    lblValeurMontant.Text = ":   " + Montant.ToString() + "€";
                     lblValeurMontant.Location = new Point(150, 25 * i);
                     lblValeurMontant.AutoSize = true;
                     gbxCaracteristiques.Controls.Add(lblValeurMontant);
                     i++;
+
                     string reglement = (string)jeuEnr["modereglement"];
                     lblreglement = new Label();
                     lblreglement.Text = "Reglé par " + reglement;
                     lblreglement.Location = new Point(15, 25 * i + 1);
                     lblreglement.AutoSize = true;
                     gbxCaracteristiques.Controls.Add(lblreglement);
-
+                    
                 }
                 catch (MySqlException ex)
                 {

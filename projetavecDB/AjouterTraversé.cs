@@ -1,7 +1,9 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace projetavecDB
@@ -12,6 +14,7 @@ namespace projetavecDB
         {
             InitializeComponent();
         }
+        ErrorProvider pbSaisie = new ErrorProvider();
 
         private void AjouterTraversé_Load(object sender, EventArgs e)
         {
@@ -128,6 +131,13 @@ namespace projetavecDB
         {
             MySqlConnection maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
             MySqlDataReader jeuEnr = null;
+
+            if (cmbBateau.SelectedItem == null || cmbLiaison.SelectedItem == null || lbxSecteur.SelectedItem == null)
+            {
+                MessageBox.Show("Veuillez remplir tous les champs !");
+                return;
+            }
+
             try
             {
                 maCnx.Open();
@@ -171,6 +181,45 @@ namespace projetavecDB
         private void dtpArriveeHeure_ValueChanged(object sender, EventArgs e)
         {
             dtpArriveeHeure.MinDate = dtpDepartHeure.Value;
+        }
+
+        private void cmbBateau_Validating(object sender, CancelEventArgs e)
+        {
+            if (cmbBateau.SelectedItem == null)
+            {
+                e.Cancel = true;
+                pbSaisie.SetError(cmbBateau, "Veuillez sélectionner un bateau !");
+            }
+            else
+            {
+                pbSaisie.SetError(cmbBateau, "");
+            }
+        }
+
+        private void cmbLiaison_Validating(object sender, CancelEventArgs e)
+        {
+            if (cmbLiaison.SelectedItem == null)
+            {
+                e.Cancel = true;
+                pbSaisie.SetError(cmbLiaison, "Veuillez sélectionner une liaison !");
+            }
+            else
+            {
+                pbSaisie.SetError(cmbLiaison, "");
+            }
+        }
+
+        private void lbxSecteur_Validating(object sender, CancelEventArgs e)
+        {
+            if (lbxSecteur.SelectedItem == null)
+            {
+                e.Cancel = true;
+                pbSaisie.SetError(lbxSecteur, "Veuillez sélectionner un secteur !");
+            }
+            else
+            {
+                pbSaisie.SetError(lbxSecteur, "");
+            }
         }
     }
 }
