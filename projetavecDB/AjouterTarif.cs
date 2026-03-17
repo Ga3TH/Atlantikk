@@ -2,6 +2,7 @@
 using System;  
 using System.Data;
 using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace projetavecDB
@@ -12,6 +13,7 @@ namespace projetavecDB
         {
             InitializeComponent();
         }
+        ErrorProvider pbSaisie = new ErrorProvider();
 
         private void AjouterTarif_Load(object sender, EventArgs e)
         {
@@ -107,6 +109,7 @@ namespace projetavecDB
                     tbx.Location = new Point(150, 25 * i);
                     tbx.AutoSize = true;
                     tbx.Tag = t.getLettrecategorie() + ";" + t.getNotype().ToString();
+                    tbx.Validating += tbxTarif_Validating;
                     grpbxTarif.Controls.Add(tbx);
                     i++;
 
@@ -130,7 +133,6 @@ namespace projetavecDB
                 }
             }
         }
-
         private void lbxSecteurs_SelectedIndexChanged(object sender, EventArgs e)
         {
             MySqlConnection maCnx;
@@ -227,7 +229,25 @@ namespace projetavecDB
 
                 }
             }
-        }
 
+        }
+        private void tbxTarif_Validating(object sender, CancelEventArgs e)
+        {
+            TextBox tbx = ((TextBox)sender);
+
+
+            var objetRegEx = new Regex("^[0-9]*$");
+            if (tbx.Text == "" || !objetRegEx.IsMatch(tbx.Text))
+            {
+                tbx.BackColor = Color.Red;
+                e.Cancel = true;
+                pbSaisie.SetError(tbx, "Veuillez saisir une distance valide (ex: 8.30) !");
+            }
+            else
+            {
+                tbx.BackColor = Color.Green;
+                pbSaisie.SetError(tbx, "");
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -52,13 +53,6 @@ namespace projetavecDB
 
         private void btnModifier_Click(object sender, EventArgs e)
         {
-            // Controles de saisie
-            if (tbxSite.Text == "" || tbxRang.Text == "" || tbxIdentifiant.Text == "" || tbxCleHMAC.Text == "")
-            {
-                MessageBox.Show("Veuillez remplir tous les champs !");
-                return;
-            }
-
             MySqlConnection maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
             MySqlDataReader jeuEnr = null;
             try
@@ -101,7 +95,9 @@ namespace projetavecDB
 
         private void tbxRang_Validating(object sender, CancelEventArgs e)
         {
-            if (tbxRang.Text == "")
+            var objetRegEx = new Regex("^[0-9]*$");
+            var résultatTest = objetRegEx.Match(tbxIdentifiant.Text);
+            if (!résultatTest.Success)
             {
                 tbxRang.BackColor = Color.Red;
                 e.Cancel = true;
@@ -116,7 +112,9 @@ namespace projetavecDB
 
         private void tbxIdentifiant_Validating(object sender, CancelEventArgs e)
         {
-            if (tbxIdentifiant.Text == "")
+            var objetRegEx = new Regex("^[0-9]*$");
+            var résultatTest = objetRegEx.Match(tbxIdentifiant.Text);
+            if (!résultatTest.Success)
             {
                 tbxIdentifiant.BackColor = Color.Red;
                 e.Cancel = true;

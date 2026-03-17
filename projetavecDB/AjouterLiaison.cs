@@ -104,14 +104,6 @@ namespace projetavecDB
                 return;
             }
 
-            var objetRegEx = new Regex(@"^\d+([.,]\d{1,2})?$");
-            if (tbxDistance.Text == "" || !objetRegEx.IsMatch(tbxDistance.Text))
-            {
-                tbxDistance.BackColor = Color.Red;
-                pbSaisie.SetError(tbxDistance, "Veuillez saisir une distance valide (ex: 8.30) !");
-                return;
-            }
-
             try
             {
                 string requête;
