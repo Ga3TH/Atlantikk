@@ -151,7 +151,7 @@ namespace projetavecDB
             {
                 tbxChoisie.BackColor = Color.Red;
                 e.Cancel = true;
-                pbSaisie.SetError(tbxChoisie, "Saisir un secteur valide !");
+                pbSaisie.SetError(tbxChoisie, "Saisir un nom de bateau valide !");
             }
             else
             {

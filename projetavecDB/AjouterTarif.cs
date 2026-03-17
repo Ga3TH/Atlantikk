@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
-using System;  
+using System;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text.RegularExpressions;
@@ -40,23 +41,14 @@ namespace projetavecDB
             }
             finally
             {
-                if (jeuEnr is object & !jeuEnr.IsClosed)
-                {
-                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
-                }
-
-                if (maCnx is object & maCnx.State == ConnectionState.Open)
-                {
-                    maCnx.Close(); // on se déconnecte
-
-                }
+                if (jeuEnr is object & !jeuEnr.IsClosed) jeuEnr.Close();
+                if (maCnx is object & maCnx.State == ConnectionState.Open) maCnx.Close();
             }
 
             try
             {
                 maCnx.Open();
                 string requête = "select * from PERIODE";
-
                 var maCde = new MySqlCommand(requête, maCnx);
                 jeuEnr = maCde.ExecuteReader();
 
@@ -72,16 +64,8 @@ namespace projetavecDB
             }
             finally
             {
-                if (jeuEnr is object & !jeuEnr.IsClosed)
-                {
-                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
-                }
-
-                if (maCnx is object & maCnx.State == ConnectionState.Open)
-                {
-                    maCnx.Close(); // on se déconnecte
-
-                }
+                if (jeuEnr is object & !jeuEnr.IsClosed) jeuEnr.Close();
+                if (maCnx is object & maCnx.State == ConnectionState.Open) maCnx.Close();
             }
 
             try
@@ -93,16 +77,14 @@ namespace projetavecDB
                 maCnx.Open();
                 requête = "select * from type";
                 var maCde = new MySqlCommand(requête, maCnx);
-
                 jeuEnr = maCde.ExecuteReader();
 
                 while (jeuEnr.Read())
                 {
-                    
                     Type t = new Type((string)jeuEnr["lettrecategorie"], (short)jeuEnr["notype"], (string)jeuEnr["libelle"]);
                     lblCategorie = new Label();
                     lblCategorie.Text = t.ToString();
-                    lblCategorie.Location = new Point(15,25*i);
+                    lblCategorie.Location = new Point(15, 25 * i);
                     lblCategorie.AutoSize = true;
                     grpbxTarif.Controls.Add(lblCategorie);
                     tbx = new TextBox();
@@ -112,7 +94,6 @@ namespace projetavecDB
                     tbx.Validating += tbxTarif_Validating;
                     grpbxTarif.Controls.Add(tbx);
                     i++;
-
                 }
             }
             catch (MySqlException ex)
@@ -121,18 +102,11 @@ namespace projetavecDB
             }
             finally
             {
-                if (jeuEnr is object & !jeuEnr.IsClosed)
-                {
-                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
-                }
-
-                if (maCnx is object & maCnx.State == ConnectionState.Open)
-                {
-                    maCnx.Close(); // on se déconnecte
-
-                }
+                if (jeuEnr is object & !jeuEnr.IsClosed) jeuEnr.Close();
+                if (maCnx is object & maCnx.State == ConnectionState.Open) maCnx.Close();
             }
         }
+
         private void lbxSecteurs_SelectedIndexChanged(object sender, EventArgs e)
         {
             MySqlConnection maCnx;
@@ -145,18 +119,14 @@ namespace projetavecDB
                 int noSecteur = ((Secteur)lbxSecteurs.SelectedItem).GetNoSecteur();
                 maCnx.Open();
                 requête = "select *, p1.nom as 'nomport_depart', p2.nom as 'nomport_arrivee' from liaison li inner join port p1 on (li.NOPORT_DEPART = p1.noport) inner join port p2 on (li.NOPORT_ARRIVEE = p2.noport) where nosecteur = @noSecteur";
-
                 var maCde = new MySqlCommand(requête, maCnx);
-
                 maCde.Parameters.AddWithValue("@noSecteur", noSecteur);
-
                 jeuEnr = maCde.ExecuteReader();
 
                 while (jeuEnr.Read())
                 {
                     Liaison p = new Liaison((string)jeuEnr["nomport_depart"], (string)jeuEnr["nomport_arrivee"], (int)jeuEnr["noliaison"]);
                     cmbLiaison.Items.Add(p);
-
                 }
             }
             catch (MySqlException ex)
@@ -165,16 +135,8 @@ namespace projetavecDB
             }
             finally
             {
-                if (jeuEnr is object & !jeuEnr.IsClosed)
-                {
-                    jeuEnr.Close(); // s'il existe et n'est pas déjà fermé
-                }
-
-                if (maCnx is object & maCnx.State == ConnectionState.Open)
-                {
-                    maCnx.Close(); // on se déconnecte
-
-                }
+                if (jeuEnr is object & !jeuEnr.IsClosed) jeuEnr.Close();
+                if (maCnx is object & maCnx.State == ConnectionState.Open) maCnx.Close();
             }
         }
 
@@ -183,18 +145,29 @@ namespace projetavecDB
             MySqlConnection maCnx;
             maCnx = new MySqlConnection("server=localhost;user=root;database=Atlantik;port=3306;password=");
 
-            if (cmbLiaison.SelectedItem == null || cmbxdate.SelectedItem == null)
+            if (cmbLiaison.SelectedItem == null || cmbxdate.SelectedItem == null || lbxSecteurs.SelectedItem == null)
             {
-                MessageBox.Show("Veuillez sélectionner une liaison et une période.");
+                MessageBox.Show("Veuillez sélectionner un secteur, une liaison et une période.");
                 return;
+            }
+
+            foreach (Control c in grpbxTarif.Controls)
+            {
+                if (c is TextBox tbx)
+                {
+                    if (tbx.Text == "" || !new Regex("^[0-9]+$").IsMatch(tbx.Text))
+                    {
+                        tbx.BackColor = Color.Red;
+                        pbSaisie.SetError(tbx, "Veuillez saisir un tarif valide !");
+                        return;
+                    }
+                }
             }
 
             try
             {
-                string requête;
                 int noLiaison = ((Liaison)cmbLiaison.SelectedItem).Getnoliaison();
                 int noperiode = ((Periode)cmbxdate.SelectedItem).Getnoperiode();
-                cmbLiaison.Items.Clear();
                 maCnx.Open();
                 var maCde = new MySqlCommand("insert into tarifer values (@noperiode,@lettrecategorie,@notype,@noliaison,@tarif)", maCnx);
                 foreach (Control c in grpbxTarif.Controls)
@@ -223,25 +196,19 @@ namespace projetavecDB
             }
             finally
             {
-                if (maCnx is object & maCnx.State == ConnectionState.Open)
-                {
-                    maCnx.Close(); // on se déconnecte
-
-                }
+                if (maCnx is object & maCnx.State == ConnectionState.Open) maCnx.Close();
             }
-
         }
+
         private void tbxTarif_Validating(object sender, CancelEventArgs e)
         {
             TextBox tbx = ((TextBox)sender);
-
-
-            var objetRegEx = new Regex("^[0-9]*$");
+            var objetRegEx = new Regex("^[0-9]+$");
             if (tbx.Text == "" || !objetRegEx.IsMatch(tbx.Text))
             {
                 tbx.BackColor = Color.Red;
                 e.Cancel = true;
-                pbSaisie.SetError(tbx, "Veuillez saisir une distance valide (ex: 8.30) !");
+                pbSaisie.SetError(tbx, "Veuillez saisir un tarif valide !");
             }
             else
             {

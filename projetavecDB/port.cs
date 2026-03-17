@@ -19,7 +19,7 @@ namespace projetavecDB
 
         public string GetNom() { return nom; }
         public int GetNoPort() { return noPort; }
-        public override string ToString() { return nom; }
+        public override string ToString() { return noPort + "-"+ nom; }
 
     }
 }

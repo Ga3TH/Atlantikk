@@ -60,7 +60,7 @@
             this.gbxCapacite.Size = new System.Drawing.Size(365, 349);
             this.gbxCapacite.TabIndex = 3;
             this.gbxCapacite.TabStop = false;
-            this.gbxCapacite.Text = "Capacité maximal";
+            this.gbxCapacite.Text = "Capacités maximales";
             // 
             // tbxChoisie
             // 

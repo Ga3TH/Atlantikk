@@ -46,7 +46,7 @@ namespace projetavecDB
 
         private void tbxChoisie_Validating(object sender, CancelEventArgs e)
         {
-            var objetRegEx = new Regex("^[a-zA-Zéèêëçàâôùûïî -]+$");
+            var objetRegEx = new Regex("^[a-zA-Zéèêëçàâôùûïî-]+$");
             var résultatTest = objetRegEx.Match(tbxChoisie.Text);
 
             if (tbxChoisie.Text == "" || !résultatTest.Success)

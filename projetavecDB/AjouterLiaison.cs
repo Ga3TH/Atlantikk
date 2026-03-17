@@ -176,7 +176,7 @@ namespace projetavecDB
 
         private void tbxDistance_Validating(object sender, CancelEventArgs e)
         {
-            var objetRegEx = new Regex(@"^\d+([.,]\d{1,2})?$");
+            var objetRegEx = new Regex("^[0-9]+$");
             if (tbxDistance.Text == "" || !objetRegEx.IsMatch(tbxDistance.Text))
             {
                 tbxDistance.BackColor = Color.Red;
