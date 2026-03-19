@@ -37,17 +37,18 @@ namespace projetavecDB
                     tbxRang.Text = jeuEnr["rang_pb"].ToString();
                     tbxIdentifiant.Text = jeuEnr["identifiant_pb"].ToString();
                     tbxCleHMAC.Text = jeuEnr["cleHMAC_pb"].ToString();
-                    cbxProd.Checked = jeuEnr["enproduction"] == DBNull.Value ? false : Convert.ToBoolean(jeuEnr["enproduction"]);
+                    cbxProd.Checked = (bool)jeuEnr["enProduction"];
+                    tbxMail.Text = jeuEnr["melsite"].ToString();
                 }
             }
-            catch (MySqlException ex)
+            catch (MySqlException erreur)
             {
-                MessageBox.Show("Erreur " + ex.ToString());
+                MessageBox.Show("Erreur " + erreur.ToString() + MessageBoxButtons.OK + MessageBoxIcon.Error);
             }
             finally
             {
-                if (jeuEnr is object && !jeuEnr.IsClosed) jeuEnr.Close();
-                if (maCnx is object && maCnx.State == ConnectionState.Open) maCnx.Close();
+                if (maCnx is object & maCnx.State == ConnectionState.Open)
+                    maCnx.Close();
             }
         }
 
@@ -58,13 +59,14 @@ namespace projetavecDB
             try
             {
                 maCnx.Open();
-                string requête = "update parametres set site_pb = @site, rang_pb = @rang, identifiant_pb = @identifiant, cleHMAC_pb = @cleHMAC, enproduction = @enproduction";
+                string requête = "update parametres set site_pb = @site, rang_pb = @rang, identifiant_pb = @identifiant, cleHMAC_pb = @cleHMAC, enproduction = @enproduction, melsite = @melsite";
                 var maCde = new MySqlCommand(requête, maCnx);
                 maCde.Parameters.AddWithValue("@site", tbxSite.Text);
                 maCde.Parameters.AddWithValue("@rang", tbxRang.Text);
                 maCde.Parameters.AddWithValue("@identifiant", tbxIdentifiant.Text);
                 maCde.Parameters.AddWithValue("@cleHMAC", tbxCleHMAC.Text);
                 maCde.Parameters.AddWithValue("@enproduction", cbxProd.Checked);
+                maCde.Parameters.AddWithValue("@melsite", tbxMail.Text);
                 maCde.ExecuteNonQuery();
                 MessageBox.Show("Paramètres modifiés avec succès !");
             }
@@ -139,6 +141,22 @@ namespace projetavecDB
             {
                 tbxCleHMAC.BackColor = Color.Green;
                 pbSaisie.SetError(tbxCleHMAC, "");
+            }
+        }
+
+        private void tbxMail_Validating(object sender, CancelEventArgs e)
+        {
+            var objetRegExMel = new Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+            if (!objetRegExMel.Match(tbxMail.Text).Success || tbxMail.Text == "")
+            {
+                tbxMail.BackColor = Color.Red;
+                e.Cancel = true;
+                pbSaisie.SetError(tbxMail, "Mail invalide");
+            }
+            else
+            {
+                tbxMail.BackColor = Color.Green;
+                pbSaisie.SetError(tbxMail, "");
             }
         }
     }

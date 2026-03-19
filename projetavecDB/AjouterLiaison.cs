@@ -104,6 +104,15 @@ namespace projetavecDB
                 return;
             }
 
+            var objetRegEx = new Regex("^[0-9]+$");
+            if (tbxDistance.Text == "" || !objetRegEx.IsMatch(tbxDistance.Text))
+            {
+                tbxDistance.BackColor = Color.Red;
+                pbSaisie.SetError(tbxDistance, "Veuillez entrer une distance valide !");
+                return;
+            }
+            tbxDistance.BackColor = Color.Green;
+            pbSaisie.SetError(tbxDistance, "");
             try
             {
                 string requête;
@@ -181,7 +190,7 @@ namespace projetavecDB
             {
                 tbxDistance.BackColor = Color.Red;
                 e.Cancel = true;
-                pbSaisie.SetError(tbxDistance, "Veuillez saisir une distance valide (ex: 8.30) !");
+                pbSaisie.SetError(tbxDistance, "Veuillez entrer une distance valide !");
             }
             else
             {

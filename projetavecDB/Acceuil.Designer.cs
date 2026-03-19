@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Acceuil));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.ajouterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAjouterSecteur = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +44,6 @@
             this.btnAfficherTraverse = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAfficherDetails = new System.Windows.Forms.ToolStripMenuItem();
             this.aProposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblAcceuil = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -168,22 +168,15 @@
             this.aProposToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.aProposToolStripMenuItem.Text = "A Propos";
             // 
-            // lblAcceuil
-            // 
-            this.lblAcceuil.AutoSize = true;
-            this.lblAcceuil.Location = new System.Drawing.Point(370, 157);
-            this.lblAcceuil.Name = "lblAcceuil";
-            this.lblAcceuil.Size = new System.Drawing.Size(52, 13);
-            this.lblAcceuil.TabIndex = 1;
-            this.lblAcceuil.Text = "ACCEUIL";
-            // 
             // Acceuil
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.lblAcceuil);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Acceuil";
             this.Text = "Atlantikk";
@@ -212,7 +205,6 @@
         private System.Windows.Forms.ToolStripMenuItem btnModifierBateau;
         private System.Windows.Forms.ToolStripMenuItem btnModifierParametre;
         private System.Windows.Forms.ToolStripMenuItem btnAjouterBateau;
-        private System.Windows.Forms.Label lblAcceuil;
     }
 }
 
