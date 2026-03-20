@@ -109,6 +109,7 @@ namespace projetavecDB
                 maCde.Parameters.AddWithValue("@melsite", tbxMail.Text);
                 maCde.ExecuteNonQuery();
                 MessageBox.Show("Paramètres modifiés avec succès !");
+
             }
             catch (MySqlException ex)
             {
